@@ -18,15 +18,18 @@ class Solution(object):
                 total = nums[i] + nums[left] + nums[right]
                 if total == 0:
                     result.append([nums[i], nums[left], nums[right]])
-                    while left < right and nums[left] == nums[left+1]:
+                    # 跳过相同的左边和右边元素，避免重复三元组
+                    while left < right and nums[left] == nums[left + 1]:
                         left += 1
-                    while left < right and nums[right] == nums[right-1]:
+                    while left < right and nums[right] == nums[right - 1]:
                         right -= 1
                     left += 1
                     right -= 1
-                elif total < 0:
-                    left += 1
-                else:
+                elif total > 0:
                     right -= 1
-        
+                else:
+                    left += 1
+                
         return result
+
+
