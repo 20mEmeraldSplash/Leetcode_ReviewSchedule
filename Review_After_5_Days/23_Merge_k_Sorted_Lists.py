@@ -11,19 +11,19 @@ class Solution(object):
         :rtype: ListNode
         """
         pq = []
-        # 初始化一个dummy节点，方便最后返回结果
         dummy = ListNode(0)
         current = dummy
 
         for l in lists:
             if l:
                 heapq.heappush(pq, (l.val, l))
-
-        while len(pq) > 0:
-            val, node = heapq.heappop(pq)
-            current.next = ListNode(val)
+        
+        while pq:
+            node_val, node = heapq.heappop(pq)
+            current.next = ListNode(node_val)
             current = current.next
 
             if node.next:
                 heapq.heappush(pq, (node.next.val, node.next))
+        
         return dummy.next
