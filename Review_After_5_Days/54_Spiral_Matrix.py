@@ -4,30 +4,27 @@ class Solution(object):
         :type matrix: List[List[int]]
         :rtype: List[int]
         """
-        height = len(matrix)
-        width = len(matrix[0])
-        checked = set()
+        if not matrix or not matrix[0]:
+            return []
+
+        h = len(matrix)
+        w = len(matrix[0])
         result = []
+        directions = [(0, 1), (1,0),(0, -1), (-1,0)]
+        index = 0
+        i, j = 0, 0
+        checked_list = [[False] * w for _ in range(h)]
 
-        directions = [(0,1), (1,0), (0,-1), (-1,0)]
-        direction_index = 0
-
-        i = 0
-        j = 0
-
-        while len(result) < height * width :
-            checked.add((i,j))
+        while len(result) < h * w :
+            checked_list[i][j] = True
             result.append(matrix[i][j])
-            next_i = i + directions[direction_index][0]
-            next_j = j + directions[direction_index][1]
-
-            if 0 <= next_i <height and 0<=next_j<width and (next_i, next_j)not in checked:
+            next_i = i + directions[index][0]
+            next_j = j + directions[index][1]
+            if (0 <= next_i < h and 0 <= next_j < w and not checked_list[next_i][next_j]):
                 i, j = next_i, next_j
             else:
-                direction_index = (direction_index + 1 )%4
-                i += directions[direction_index][0]
-                j += directions[direction_index][1]
-
+                index = (index+1)%4
+                i += directions[index][0]
+                j += directions[index][1]
+            
         return result
-
-

@@ -10,23 +10,17 @@ class Solution(object):
         :type lists: List[ListNode]
         :rtype: ListNode
         """
-        
-        dummy = ListNode(0) #要不要0？
+        dummy = ListNode(0)
         current = dummy
-        pq = []
-
-        for l in lists:
-            if l: 
-                heapq.heappush(pq, (l.val, l))
+        pq=[]
         
+        for l in lists:
+            if l:
+                heapq.heappush(pq, (l.val, l))
         while pq:
             node_val, node = heapq.heappop(pq)
-            current.next = ListNode(node_val)
-            current = current.next
             if node.next:
                 heapq.heappush(pq, (node.next.val, node.next))
-
+            current.next = node
+            current = current.next
         return dummy.next
-
-
-
