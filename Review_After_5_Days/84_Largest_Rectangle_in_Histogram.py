@@ -5,13 +5,15 @@ class Solution(object):
         :rtype: int
         """
         heights.append(0)
-        stack = []
+        check = [(heights[0], 0)]
         result = 0
-
-        for i in range(len(heights)):
-            while stack and heights[stack[-1]] > heights[i]:
-                h = heights[stack.pop()]
-                w = i if not stack else i - stack[-1] - 1 
-                result = max(result, h * w)
-            stack.append(i)
+        for i in range(1, len(heights)):
+            if heights[i] >= check[-1][0]:
+                check.append((heights[i], i))
+            else:
+                while check and heights[i] < check[-1][0]:
+                    height, left_index = check.pop(-1)
+                    width = i if not check else i - check[-1][1] - 1 #有点难
+                    result = max(result, height * width)
+                check.append((heights[i], i))
         return result

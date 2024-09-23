@@ -6,9 +6,8 @@ class Solution(object):
         :rtype: List[int]
         """
         hashmap = {}
-        for i in range (0, len(nums)):
+        for i in range(len(nums)):
             if nums[i] in hashmap:
                 return [hashmap[nums[i]], i]
             else:
                 hashmap[target-nums[i]] = i
-    

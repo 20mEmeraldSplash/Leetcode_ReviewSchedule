@@ -16,12 +16,13 @@ class Solution(object):
         # 用来存储结果的列表
         result = []
 
-        def helper(combination, next_digits):
-            if len(next_digits) == 0:
-                result.append(combination)
+        def helper(com, current_length):
+            if current_length == len(digits):
+                result.append(com)
             else:
-                for letter in phone[next_digits[0]]:
-                    helper(combination + letter, next_digits[1:])
-
-        helper("", digits)
+                for i in phone[digits[current_length]]:
+                    helper(com+i, current_length+1)
+        helper("", 0)
+        return result
+            
         return result
