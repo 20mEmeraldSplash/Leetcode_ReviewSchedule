@@ -10,20 +10,14 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        # 将 max_sum 设置为实例的属性
-        self.max_sum = float('-inf')
-
+        self.result = float('-inf')
         def helper(node):
             if not node:
                 return 0
-            leftNodeSum = max(helper(node.left), 0)
-            rightNodeSum = max(helper(node.right), 0)
-
-            currentNodeSum = node.val + leftNodeSum + rightNodeSum
-
-            self.max_sum = max(self.max_sum,currentNodeSum )
-
-            return node.val + max(leftNodeSum, rightNodeSum)
-        
+            left_val = max(helper(node.left),0)
+            right_val = max(helper(node.right),0)
+            current_sum = left_val + right_val + node.val
+            self.result = max(self.result, current_sum)
+            return node.val+max(left_val, right_val)
         helper(root)
-        return self.max_sum
+        return self.result
