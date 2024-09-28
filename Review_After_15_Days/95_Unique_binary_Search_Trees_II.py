@@ -12,24 +12,21 @@ class Solution(object):
         """
         if n == 0:
             return []
-        
-        def helper(start,end):
+        def helper(start, end):
             if start > end:
                 return [None]
-            
+
             all_trees = []
 
             for i in range(start, end+1):
-                left_trees = helper(start, i-1)
-                right_trees = helper(i+1, end)
+                leftTree = helper(start, i-1)
+                rightTree = helper(i+1, end)
 
-                for left in left_trees:
-                    for right in right_trees:
-                        current_tree = TreeNode(i)
-                        current_tree.left = left
-                        current_tree.right = right
-                        all_trees.append(current_tree)
-
+                for l in leftTree:
+                    for r in rightTree:
+                        newTree = TreeNode(i)
+                        newTree.left = l
+                        newTree.right = r
+                        all_trees.append(newTree)
             return all_trees
-
-        return helper(1, n)
+        return helper(1,n)
