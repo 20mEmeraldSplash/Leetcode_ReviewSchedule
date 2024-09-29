@@ -5,15 +5,18 @@ class Solution(object):
         :rtype: int
         """
         heights.append(0)
-        check = [(heights[0], 0)]
         result = 0
-        for i in range(1, len(heights)):
-            if heights[i] >= check[-1][0]:
-                check.append((heights[i], i))
+        checked = [0]
+        
+        for i in range(len(heights)):
+            if heights[i] >= heights[checked[-1]]:
+                checked.append(i)
             else:
-                while check and heights[i] < check[-1][0]:
-                    height, left_index = check.pop(-1)
-                    width = i if not check else i - check[-1][1] - 1 #有点难
-                    result = max(result, height * width)
-                check.append((heights[i], i))
+                while checked and heights[i] < heights[checked[-1]]:
+                    h = heights[checked.pop(-1)]
+                    w = i if not checked else i - checked[-1] - 1
+                    result = max(result, h * w)
+                checked.append(i)
+        return result
+
         return result
