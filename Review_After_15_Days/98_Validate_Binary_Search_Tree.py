@@ -10,12 +10,11 @@ class Solution(object):
         :type root: TreeNode
         :rtype: bool
         """
-        def helper(node, low, high):
+        def helper(node, left, right):
             if not node:
                 return True
-            if low < node.val < high: 
-                return helper(node.left, low, node.val) and helper(node.right, node.val, high)
-            else:
+            if node.val <= left or node.val >= right:
                 return False
-        
+            return helper(node.left, left, node.val) and helper(node.right, node.val, right)
+
         return helper(root, float('-inf'), float('inf'))
