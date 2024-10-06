@@ -13,9 +13,9 @@ class Solution(object):
         def helper(node):
             if not node:
                 return (0, 0)
-            left = helper(node.left)
-            right = helper(node.right)
-            not_rob = max(left) + max(right)
-            rob = left[0] + node.val + right[0]
-            return (not_rob, rob)
+            rob_left, not_rob_left = helper(node.left)
+            rob_right, not_rob_right = helper(node.right)
+            rob = not_rob_left + not_rob_right + node.val
+            not_rob = max(rob_left, not_rob_left) + max(rob_right, not_rob_right )
+            return (rob, not_rob)
         return max(helper(root))
