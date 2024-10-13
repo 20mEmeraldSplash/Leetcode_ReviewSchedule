@@ -14,42 +14,36 @@ class Solution(object):
         :rtype: List[int]
         """
         self.result = []
-        
-        def helper(node, k):
+        # 距离node为k的节点
+        def helperI(node, k):
             if not node:
                 return
             if k == 0:
                 self.result.append(node.val)
                 return
-            helper(node.left, k-1)
-            helper(node.right, k-1)
-
+            helperI(node.left, k-1)
+            helperI(node.right, k-1)
+        
+        # 计算每个节点距离target的距离
         def dfs(node):
             if not node:
                 return -1
-            if node == target:
-                helper(node, k)
+            if node.val == target.val:
+                helperI(node, k)
                 return 0
-            left_distance = dfs(node.left)
-            if left_distance != -1:
-                if left_distance + 1 == k:
+            leftD = dfs(node.left)
+            if leftD != -1:
+                if leftD + 1 == k:
                     self.result.append(node.val)
-                else:
-                    if k - left_distance - 2 >= 0:
-                        helper(node.right, k - left_distance - 2)
-                return left_distance + 1
-
-            right_distance = dfs(node.right)
-            if right_distance != -1:
-                if right_distance + 1 == k:
+                helperI(node.right, k-leftD-2)
+                return leftD + 1
+            rightD = dfs(node.right)
+            if rightD != -1:
+                if rightD + 1 == k:
                     self.result.append(node.val)
-                else:
-                    if k - right_distance - 2 >= 0:
-                        helper(node.left, k - right_distance - 2)
-                return right_distance + 1
-
+                helperI(node.left, k-rightD-2)
+                return rightD + 1
             return -1
-        
+
         dfs(root)
-        
         return self.result

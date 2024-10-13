@@ -10,14 +10,10 @@ class Solution(object):
         :type n: int
         :rtype: List[TreeNode]
         """
-        if n == 0:
-            return []
         def helper(start, end):
             if start > end:
                 return [None]
-
             all_trees = []
-
             for i in range(start, end+1):
                 leftTree = helper(start, i-1)
                 rightTree = helper(i+1, end)
@@ -29,4 +25,6 @@ class Solution(object):
                         newTree.right = r
                         all_trees.append(newTree)
             return all_trees
-        return helper(1,n)
+        return helper(1, n)
+
+            
