@@ -10,12 +10,14 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
+        self.result = 0
         def helper(node):
             if not node:
-                return (0, 0)
-            rob_left, not_rob_left = helper(node.left)
-            rob_right, not_rob_right = helper(node.right)
-            rob = not_rob_left + not_rob_right + node.val
-            not_rob = max(rob_left, not_rob_left) + max(rob_right, not_rob_right )
-            return (rob, not_rob)
+                return (0,0)
+            robL, notRobL = helper(node.left)
+            robR, notRobR = helper(node.right)
+            robN = notRobL + notRobR + node.val
+            notRobN = max(robL, notRobL) + max(robR, notRobR)
+            return (robN, notRobN)
+
         return max(helper(root))
