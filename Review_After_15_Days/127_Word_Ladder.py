@@ -1,3 +1,4 @@
+import collections
 class Solution(object):
     def ladderLength(self, beginWord, endWord, wordList):
         """
@@ -10,20 +11,21 @@ class Solution(object):
         wordList = set(wordList)
         if endWord not in wordList:
             return 0
-
-        queue = deque([[beginWord, 1]])
-        
+        q = collections.deque()
+        q.append([beginWord, 1])
         chars = 'abcdefghijklmnopqrstuvwxyz'
-        
-        while queue:
-            currentWord, steps = queue.popleft()
-            for i in range(0, len(currentWord)):
+
+        while q:
+            currW, currS = q.popleft()
+            for i in range(0, len(currW)):
                 for c in chars:
-                    newWord = currentWord[:i] + c + currentWord[i+1: ]
-                    if newWord == endWord:
-                        return steps+1
-                    if newWord in wordList:
-                        wordList.remove(newWord)
-                        queue.append([newWord, steps+1])
+                    newW = currW[:i] + c + currW[i+1:]
+                    if newW == endWord:
+                        return currS + 1
+                    if newW in wordList:
+                        wordList.remove(newW)
+                        q.append([newW, currS + 1])
         return 0
 
+
+        

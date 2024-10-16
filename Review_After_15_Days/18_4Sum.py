@@ -5,33 +5,35 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
-        self.result = []
-        def twosum(firstTwo,target, nums):
-            left = 0
-            right = len(nums) - 1
-            while left < right:
-                current_sum = nums[left] + nums[right]
-                if current_sum == target:
-                    self.result.append(firstTwo+[nums[left], nums[right]])
-                    while left < right and nums[left+1] == nums[left]:
-                        left += 1
-                    while left < right and nums[right-1] == nums[right]:
-                        right -= 1
-                    left += 1
-                    right -= 1
-                elif current_sum < target:
-                    left += 1
-                else:
-                    right -= 1
-        
         nums = sorted(nums)
-        
-        for i in range(0, len(nums)-3):
-            if i > 0 and nums[i] == nums[i - 1]:  # 去重
+        result = []
+        n = len(nums)
+
+        for i in range(n-3):
+            if i > 0 and nums[i] == nums[i-1]:
                 continue
-            for j in range(i+1, len(nums)-2):
-                if j > i + 1 and nums[j] == nums[j - 1]:  # 去重
+
+            for j in range(i+1,n - 2):
+                if j > i+1 and nums[j] == nums[j-1]:
                     continue
-                twosum([nums[i], nums[j]], target-nums[i]-nums[j], nums[j+1:])
-                
-        return self.result
+                t = target - nums[i]- nums[j] 
+                left = j + 1
+                right = n - 1
+                while left < right:
+                    if nums[left] + nums[right] == t:
+                        result.append([nums[i], nums[j], nums[left], nums[right]])
+                        while left < right and nums[left + 1] == nums[left]:
+                            left += 1
+                        while right > left and nums[right-1] == nums[right]:
+                            right -= 1
+                        left += 1
+                        right -= 1
+                    elif nums[left] + nums[right] > t: 
+                        right -= 1
+                    else:
+                        left += 1
+
+        return result
+
+        
+            
