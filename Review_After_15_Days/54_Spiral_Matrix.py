@@ -6,27 +6,25 @@ class Solution(object):
         """
         result = []
         checked = []
+        directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+        dIndex = 0
+
         m = len(matrix)
         n = len(matrix[0])
-        start_m = 0
-        start_n = 0
 
-        dect_list = [(0, 1), (1,0), (0,-1),(-1,0)]
-
-        dect_index = 0
+        startM = 0
+        startN = 0
 
         while len(result) < m * n:
-            if (start_m, start_n) not in checked:
-                result.append(matrix[start_m][start_n])
-                checked.append((start_m, start_n))
-                new_m = start_m + dect_list[dect_index][0]
-                new_n = start_n + dect_list[dect_index][1]
-                if 0<=new_m<m and 0<=new_n<n and (new_m, new_n) not in checked:
-                    start_m = new_m
-                    start_n = new_n
-                else:
-                    dect_index = (dect_index + 1) % 4
-                    start_m = start_m + dect_list[dect_index][0]
-                    start_n = start_n + dect_list[dect_index][1]
+            checked.append([startM, startN])
+            result.append(matrix[startM][startN])
+            newM = startM + directions[dIndex][0]
+            newN = startN + directions[dIndex][1]
+            if 0 <= newM < m and 0 <= newN < n and [newM, newN] not in checked:
+                startM = newM
+                startN = newN
+            else:
+                dIndex = (dIndex + 1) % 4
+                startM += directions[dIndex][0]
+                startN += directions[dIndex][1]
         return result
-

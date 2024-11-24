@@ -7,8 +7,8 @@ import heapq
 class Solution(object):
     def mergeKLists(self, lists):
         """
-        :type lists: List[ListNode]
-        :rtype: ListNode
+        :type lists: List[Optional[ListNode]]
+        :rtype: Optional[ListNode]
         """
         result = ListNode(0)
         dummy = result
@@ -19,10 +19,11 @@ class Solution(object):
                 heapq.heappush(pq, (l.val, l))
         
         while pq:
-            smallest_val, smallest = heapq.heappop(pq)
-            dummy.next = ListNode(smallest_val)
+            checkVal, checkNode = heapq.heappop(pq)
+            dummy.next = ListNode(checkVal)
             dummy = dummy.next
-            if smallest.next:
-                heapq.heappush(pq, (smallest.next.val, smallest.next))
-        
+            if checkNode.next:
+                heapq.heappush(pq, (checkNode.next.val, checkNode.next))
+
         return result.next
+        
